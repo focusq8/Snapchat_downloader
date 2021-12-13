@@ -2,10 +2,8 @@ import requests
 import random
 import os
 
-CRED = '\033[91m'
-CEND = '\033[0m'
-CBLUEBG   = '\33[34'
-CGREEN  = '\33[32m'
+RED = '\033[91m'
+GREEN  = '\33[32m'
 
 username = input("""
 
@@ -34,7 +32,7 @@ json = requests.get(url)
 if json:
     json = json.json()
 else:
-    print(CRED +f'{username}', ' ➝ Not Found ✘ ' + CRED)
+    print(f'{RED}{username} ➝ Not Found ✘ ')
     exit()
 storyTitle = json['storyTitle']
 
@@ -44,9 +42,9 @@ snapLength = len(snapList)
 
 print('---------------------')
 
-print(f'\nUser: {username}')
-print(f'\nTitle : {storyTitle}')
-print('\nCount: ',len(snapList))
+print(f'\n{GREEN}User: {username}')
+print(f'\n{GREEN}Title: {storyTitle}')
+print(f'\n{GREEN}Count: ',len(snapList))
 
 print('---------------------')
 
@@ -55,18 +53,18 @@ for snap_loop in snapList:
 
     print (snap_loop['snapUrls']['mediaUrl'])
     if snap_loop['snapUrls']['mediaUrl'].endswith(".mp4"):
-      tt = format(snap_loop['snapUrls']["mediaUrl"])
+      down_videos = format(snap_loop['snapUrls']["mediaUrl"])
 
-      requesttry = requests.get(f'{tt}').content
+      requesttry = requests.get(f'{down_videos}').content
       with open(f'{get_random}''.mp4','wb') as video:
         video.write(requesttry)
 
     else:
         down_photos = format(snap_loop['snapUrls']['mediaUrl'])
-        requesttry1 = requests.get(f'{tt}').content
+        requesttry1 = requests.get(f'{down_photos}').content
         with open(f'{get_random}''.jpg', 'wb') as image:
             image.write(requesttry1)
         
 if snap_loop ['snapIndex']+1 == snapLength:
     print("\n")
-    print( CGREEN + "Successfully Downloaded ... ( ✔ )" + CGREEN )
+    print(f"{GREEN}Successfully Downloaded ... ( ✔ )" )
